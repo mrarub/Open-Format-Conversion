@@ -334,7 +334,7 @@ class Ui_MainWindow(object):
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt;\">Open\u683c\u5f0f\u8f6c\u6362 v0.9</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt;\">Open\u683c\u5f0f\u8f6c\u6362 v0.9.1</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">\u9879"
                         "\u76ee\u7b80\u4ecb</span></p>\n"
@@ -365,7 +365,14 @@ class Ui_MainWindow(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">\u8d21\u732e\u4e0e\u53cd\u9988</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">\u6b22\u8fce\u901a\u8fc7 GitHub/Gitee \u63d0\u4ea4 Issue \u6216 Pull Request \u53c2\u4e0e\u9879\u76ee\u6539\u8fdb\uff01</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">\u5982\u9700\u5e2e\u52a9\u6216\u53cd\u9988\u95ee\u9898\uff0c\u53ef\u901a\u8fc7\u5b98"
-                        "\u65b9\u7f51\u7ad9\u6216\u4ed3\u5e93 Issues \u8054\u7cfb\u5f00\u53d1\u8005\u3002</span></p></body></html>", None))
+                        "\u65b9\u7f51\u7ad9\u6216\u4ed3\u5e93 Issues \u8054\u7cfb\u5f00\u53d1\u8005\u3002</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">\u66f4\u65b0\u65e5\u5fd7:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">0.9 \u7b2c\u4e00\u4e2a\u53d1\u884c\u7248\u672c</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">0.9.1 \u4fee\u590d\u95ee\u9898:\u89c6\u9891\u538b\u7f29\u53c2\u6570\u4e0d\u751f\u6548\u95ee\u9898\u3002</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; marg"
+                        "in-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">           \u589e\u52a0\u529f\u80fd:\u8f6c\u6362\u6267\u884c\u5b8c\uff0c\u70b9\u51fb\u5b8c\u6210\u81ea\u52a8\u6253\u5f00\u8f93\u51fa\u76ee\u5f55</span></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"MP4", None))
         self.comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"MKV", None))
         self.comboBox.setItemText(2, QCoreApplication.translate("MainWindow", u"MOV", None))

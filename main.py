@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import subprocess
 from PySide6.QtWidgets import QMainWindow, QApplication, QWidget, QFileDialog, QAbstractItemView, QHeaderView, QTableWidgetItem, QMessageBox
 from PySide6.QtCore import Qt, QProcess, QObject, Signal
 from page.home_ui import Ui_MainWindow
@@ -259,7 +260,7 @@ class MainWindow(QMainWindow):
         file_name = os.path.basename(input_file).rsplit('.', 1)[0]
 
         current_index = self.ui.stackedWidget.currentIndex()
-        output_format = self.current_output_format  # 从实例变量获取输出格式
+        output_format = self.current_output_format
 
         # 根据当前页面确定输出目录
         if current_index == 1:  # 视频页面（page_1）
@@ -284,7 +285,7 @@ class MainWindow(QMainWindow):
         ffmpeg_args = []
 
         if current_index == 1:  # 视频页面（page_1）
-            # === 新增：判断是否为GIF格式 ===
+            # 判断是否为GIF格式
             is_gif = output_format.lower() == "gif"
             config = self.read_config("config/video_settings.ini")
             
@@ -295,23 +296,22 @@ class MainWindow(QMainWindow):
                     "视频帧数(fps)": "-r",
                     "视频编码": "-c:v"
                 }
-                # 处理原有参数（crf/帧数/编码）
+                # 处理视频参数
                 for key, ffmpeg_key in param_map.items():
                     if key in config and config[key]:
                         ffmpeg_args.extend([ffmpeg_key, config[key]])
 
-                # === 新增：处理视频音量参数 ===
+                # 处理视频音量参数
                 volume = config.get("音量", "").strip()
                 if volume:
-                    # 校验音量值是否为有效数字
                     try:
-                        float(volume)  # 尝试转换为浮点数，失败则抛出异常
-                        ffmpeg_args.append(f"-filter:a volume={volume}")  # 添加音频音量滤镜
+                        float(volume)
+                        ffmpeg_args.append(f"-filter:a volume={volume}")
                     except ValueError:
                         QMessageBox.warning(self, "警告", "音量值需为有效数字（如1.25）！")
                         return
 
-                # 处理宽度/高度自适应逻辑（保持原逻辑）
+                # 处理宽度/高度自适应
                 width = config.get("宽度", "").strip()
                 height = config.get("高度", "").strip()
                 if width or height:
@@ -325,24 +325,24 @@ class MainWindow(QMainWindow):
 
             # GIF格式时不添加任何视频参数（直接跳过）
 
-        elif current_index == 2:  # 音频页面（page_2）对应music_settings.ini
+        elif current_index == 2:
             config = self.read_config("config/music_settings.ini")
-            # 音频参数映射（移除"声道"）
             param_map = {
                 "采样率(Hz)": "-ar",
                 "比特率(kbps)": "-b:a",
-                "音量": "-filter:a volume="  # 特殊处理音量参数（示例）
+                "音量": "-filter:a volume="
             }
+            # 处理音频参数
             for key, ffmpeg_key in param_map.items():
                 if key in config:
-                    if key == "音量":  # 音量需要拼接值（如：-filter:a volume=2）
+                    if key == "音量":
                         ffmpeg_args.append(f"{ffmpeg_key}{config[key]}")
                     else:
                         ffmpeg_args.extend([ffmpeg_key, config[key]])
 
-        elif current_index == 3:  # 图片页面（page_3）对应image_settings.ini
+        elif current_index == 3:
             config = self.read_config("config/image_settings.ini")
-            # 图片参数处理（宽度和高度组合为scale滤镜）
+            # 处理图片参数
             width = config.get("宽度", "")
             height = config.get("高度", "")
             if width and height:
@@ -352,13 +352,34 @@ class MainWindow(QMainWindow):
             elif height:
                 ffmpeg_args.extend(["-vf", f"scale=-1:{height}"])  # 保持宽高比
 
-        # === 构造最终FFmpeg命令 ===
-        # 基础命令结构：ffmpeg -y -i [输入] [参数] [输出]
+        elif current_index == 4:  # 视频压缩页面（page_4）
+            # 1. 处理编码器
+            encoder = self.ui.comboBox_5.currentText()
+            if encoder and encoder != "默认":
+                ffmpeg_args.extend(["-c:v", encoder])
+            
+            # 2. 处理CRF值
+            crf = self.ui.lineEdit.text().strip()
+            if crf:
+                ffmpeg_args.extend(["-crf", crf])
+            
+            # 3. 处理宽度和高度
+            width = self.ui.lineEdit_1.text().strip()
+            height = self.ui.lineEdit_2.text().strip()
+            if width or height:
+                if width and height:
+                    scale = f"scale={width}:{height}"
+                elif width:
+                    scale = f"scale={width}:-1"
+                else:
+                    scale = f"scale=-1:{height}"
+                ffmpeg_args.extend(["-vf", scale])
+
+        # 构造最终FFmpeg命令
         cmd_parts = ["ffmpeg", "-y", "-i", f'"{input_file}"']
-        cmd_parts.extend(ffmpeg_args)  # 添加配置参数
+        cmd_parts.extend(ffmpeg_args)
         cmd_parts.append(f'"{output_file}"')
         cmd = " ".join(cmd_parts)
-        # === 原有窗口显示逻辑保持不变 ===
 
         self.output_window = QWidget()
         self.output_ui = OutputUiForm()
@@ -366,9 +387,7 @@ class MainWindow(QMainWindow):
         self.output_window.show()
 
         self.output_worker = OutputWorker(input_file, output_file)
-        # 注意：需要将新构造的cmd传递给OutputWorker
-        # 这里需要修改OutputWorker的start方法接收自定义cmd（见下方说明）
-        self.output_worker.cmd = cmd  # 新增：将构造的命令传递给Worker
+        self.output_worker.cmd = cmd
         self.output_worker.log_signal.connect(self.update_log)
         self.output_worker.finished_signal.connect(self.output_finished)
         self.output_ui.pushButton.clicked.connect(self.stop_ffmpeg)
@@ -389,6 +408,30 @@ class MainWindow(QMainWindow):
         if self.output_window:
             self.output_window.close()
         self.current_file_index += 1  # 关键修改：处理完当前文件后索引+1
+        if self.current_file_index >= len(self.file_queue):
+            # 所有文件处理完成
+            QMessageBox.information(self, "提示", "所有文件执行已完成！")
+            current_index = self.ui.stackedWidget.currentIndex()
+            # 根据当前页面确定输出目录
+            if current_index == 1:  # 视频页面（page_1）
+                output_dir = "video"
+            elif current_index == 2:  # 音频页面（page_2）
+                output_dir = "music"
+            elif current_index == 3:  # 图片页面（page_3）
+                output_dir = "image"
+            elif current_index == 4:  # 视频压缩页面（page_4）
+                output_dir = "Video_compression"
+            else:
+                output_dir = ""
+
+            if output_dir:
+                full_output_dir = os.path.join(os.getcwd(), "Open-Format-Conversion", output_dir)
+                try:
+                    # 使用 subprocess 模块打开目录
+                    subprocess.run(['xdg-open', full_output_dir], check=True)
+                except subprocess.CalledProcessError as e:
+                    QMessageBox.warning(self, "警告", f"无法打开输出目录: {e}")
+            return
         self.process_next_file()  # 关键修改：触发处理下一个文件
 
     def close_output_window(self, event):
