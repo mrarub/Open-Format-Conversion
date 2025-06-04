@@ -238,6 +238,11 @@ class MainWindow(QMainWindow):
         return params
 
     def execute_ffmpeg(self):
+        # 新增：检查是否有正在运行的任务
+        if self.output_worker is not None and self.output_worker.process.state() == QProcess.Running:
+            QMessageBox.warning(self, "警告", "当前有任务正在运行，请等待完成后再尝试！")
+            return
+
         output_format = self.get_output_format()
         input_files = self.get_input_files()
 

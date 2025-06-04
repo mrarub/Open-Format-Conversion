@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'home.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.9.0
+## Created by: Qt User Interface Compiler version 6.9.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -150,9 +150,6 @@ class Ui_MainWindow(object):
         self.comboBox_2.addItem("")
         self.comboBox_2.addItem("")
         self.comboBox_2.addItem("")
-        self.comboBox_2.addItem("")
-        self.comboBox_2.addItem("")
-        self.comboBox_2.addItem("")
         self.comboBox_2.setObjectName(u"comboBox_2")
         self.comboBox_2.setGeometry(QRect(70, 10, 81, 31))
         self.pushButton_10 = QPushButton(self.page_2)
@@ -191,10 +188,6 @@ class Ui_MainWindow(object):
         self.label_3.setGeometry(QRect(0, 10, 71, 31))
         self.label_3.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.comboBox_3 = QComboBox(self.page_3)
-        self.comboBox_3.addItem("")
-        self.comboBox_3.addItem("")
-        self.comboBox_3.addItem("")
-        self.comboBox_3.addItem("")
         self.comboBox_3.addItem("")
         self.comboBox_3.addItem("")
         self.comboBox_3.addItem("")
@@ -334,7 +327,7 @@ class Ui_MainWindow(object):
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt;\">Open\u683c\u5f0f\u8f6c\u6362 v0.9.1</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt;\">Open\u683c\u5f0f\u8f6c\u6362 v0.9.2</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">\u9879"
                         "\u76ee\u7b80\u4ecb</span></p>\n"
@@ -372,7 +365,7 @@ class Ui_MainWindow(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">0.9.1 \u4fee\u590d\u95ee\u9898:\u89c6\u9891\u538b\u7f29\u53c2\u6570\u4e0d\u751f\u6548\u95ee\u9898\u3002</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; marg"
                         "in-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">           \u589e\u52a0\u529f\u80fd:\u8f6c\u6362\u6267\u884c\u5b8c\uff0c\u70b9\u51fb\u5b8c\u6210\u81ea\u52a8\u6253\u5f00\u8f93\u51fa\u76ee\u5f55</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">0.9.2 <span style=\" font-size:10pt;\">\u589e\u52a0\u529f\u80fd:\u5728\u521b\u5efa\u65b0\u4efb\u52a1\u524d\u589e\u52a0\u72b6\u6001\u6821\u9a8c\u903b\u8f91\uff0c\u5f53\u68c0\u6d4b\u5230\u5b58\u5728\u6b63\u5728\u8fd0\u884c\u4efb\u52a1\u65f6\uff0c\u963b\u65ad\u65b0\u4efb\u52a1\u542f\u52a8\u5e76\u89e6\u53d1\u53cb\u597d\u63d0\u793a\u673a\u5236</span></p></body></html>", None))
         self.comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"MP4", None))
         self.comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"MKV", None))
         self.comboBox.setItemText(2, QCoreApplication.translate("MainWindow", u"MOV", None))
@@ -393,12 +386,9 @@ class Ui_MainWindow(object):
         self.comboBox_2.setItemText(4, QCoreApplication.translate("MainWindow", u"WAV", None))
         self.comboBox_2.setItemText(5, QCoreApplication.translate("MainWindow", u"OGG", None))
         self.comboBox_2.setItemText(6, QCoreApplication.translate("MainWindow", u"AC3", None))
-        self.comboBox_2.setItemText(7, QCoreApplication.translate("MainWindow", u"DTS", None))
-        self.comboBox_2.setItemText(8, QCoreApplication.translate("MainWindow", u"WMA", None))
-        self.comboBox_2.setItemText(9, QCoreApplication.translate("MainWindow", u"MP2", None))
-        self.comboBox_2.setItemText(10, QCoreApplication.translate("MainWindow", u"WV", None))
-        self.comboBox_2.setItemText(11, QCoreApplication.translate("MainWindow", u"MMF", None))
-        self.comboBox_2.setItemText(12, QCoreApplication.translate("MainWindow", u"M4R", None))
+        self.comboBox_2.setItemText(7, QCoreApplication.translate("MainWindow", u"WMA", None))
+        self.comboBox_2.setItemText(8, QCoreApplication.translate("MainWindow", u"MP2", None))
+        self.comboBox_2.setItemText(9, QCoreApplication.translate("MainWindow", u"WV", None))
 
         self.pushButton_10.setText(QCoreApplication.translate("MainWindow", u"\u9ad8\u7ea7\u914d\u7f6e", None))
         self.pushButton_11.setText(QCoreApplication.translate("MainWindow", u"\u9009\u62e9\u6587\u4ef6", None))
@@ -413,10 +403,6 @@ class Ui_MainWindow(object):
         self.comboBox_3.setItemText(4, QCoreApplication.translate("MainWindow", u"TIFF", None))
         self.comboBox_3.setItemText(5, QCoreApplication.translate("MainWindow", u"JPEG", None))
         self.comboBox_3.setItemText(6, QCoreApplication.translate("MainWindow", u"ICO", None))
-        self.comboBox_3.setItemText(7, QCoreApplication.translate("MainWindow", u"SVG", None))
-        self.comboBox_3.setItemText(8, QCoreApplication.translate("MainWindow", u"RAW", None))
-        self.comboBox_3.setItemText(9, QCoreApplication.translate("MainWindow", u"HEIC", None))
-        self.comboBox_3.setItemText(10, QCoreApplication.translate("MainWindow", u"AI", None))
 
         self.pushButton_15.setText(QCoreApplication.translate("MainWindow", u"\u9ad8\u7ea7\u914d\u7f6e", None))
         self.pushButton_16.setText(QCoreApplication.translate("MainWindow", u"\u9009\u62e9\u6587\u4ef6", None))
