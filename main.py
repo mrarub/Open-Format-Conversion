@@ -20,7 +20,7 @@ class OutputWorker(QObject):
     log_signal = Signal(str)
     finished_signal = Signal()
 
-    def __init__(self, input_file, output_file):
+    def __init__(self, input_file, output_file, page_index):  # 新增 page_index 参数
         super().__init__()
         self.input_file = input_file
         self.output_file = output_file
@@ -28,14 +28,13 @@ class OutputWorker(QObject):
         self.process.readyReadStandardOutput.connect(self.handle_stdout)
         self.process.readyReadStandardError.connect(self.handle_stderr)
         self.process.finished.connect(self.handle_finished)
-        self.cmd = None  # 新增：用于接收自定义命令
+        self.cmd = None
+        self.page_index = page_index  # 保存页面索引
 
     def start(self):
         # 使用自定义命令替代原固定模板
         if self.cmd:
             self.process.start("sh", ["-c", self.cmd])  # Linux/macOS
-            # 如果是Windows系统，需要改为：
-            # self.process.start("cmd.exe", ["/c", self.cmd])
         else:
             # 保留原逻辑作为备用
             cmd = f'ffmpeg -y -i "{self.input_file}" "{self.output_file}"'
@@ -253,6 +252,7 @@ class MainWindow(QMainWindow):
         self.file_queue = input_files  # 填充文件队列
         self.current_file_index = 0  # 重置当前索引
         self.current_output_format = output_format  # 新增：保存当前输出格式
+        self.current_page_index = self.ui.stackedWidget.currentIndex()  # 保存当前页面索引
         self.process_next_file()  # 修改：不传递参数，使用实例变量
 
     def process_next_file(self):
@@ -264,7 +264,7 @@ class MainWindow(QMainWindow):
         input_file = self.file_queue[self.current_file_index]
         file_name = os.path.basename(input_file).rsplit('.', 1)[0]
 
-        current_index = self.ui.stackedWidget.currentIndex()
+        current_index = self.current_page_index  # 使用保存的页面索引
         output_format = self.current_output_format
 
         # 根据当前页面确定输出目录
@@ -391,7 +391,7 @@ class MainWindow(QMainWindow):
         self.output_ui.setupUi(self.output_window)
         self.output_window.show()
 
-        self.output_worker = OutputWorker(input_file, output_file)
+        self.output_worker = OutputWorker(input_file, output_file, current_index)  # 传递页面索引
         self.output_worker.cmd = cmd
         self.output_worker.log_signal.connect(self.update_log)
         self.output_worker.finished_signal.connect(self.output_finished)
@@ -412,12 +412,12 @@ class MainWindow(QMainWindow):
     def output_finished(self):
         if self.output_window:
             self.output_window.close()
-        self.current_file_index += 1  # 关键修改：处理完当前文件后索引+1
+        self.current_file_index += 1
         if self.current_file_index >= len(self.file_queue):
             # 所有文件处理完成
             QMessageBox.information(self, "提示", "所有文件执行已完成！")
-            current_index = self.ui.stackedWidget.currentIndex()
-            # 根据当前页面确定输出目录
+            # 使用 OutputWorker 中保存的页面索引
+            current_index = self.output_worker.page_index
             if current_index == 1:  # 视频页面（page_1）
                 output_dir = "video"
             elif current_index == 2:  # 音频页面（page_2）
@@ -437,7 +437,7 @@ class MainWindow(QMainWindow):
                 except subprocess.CalledProcessError as e:
                     QMessageBox.warning(self, "警告", f"无法打开输出目录: {e}")
             return
-        self.process_next_file()  # 关键修改：触发处理下一个文件
+        self.process_next_file()
 
     def close_output_window(self, event):
         self.stop_ffmpeg()
