@@ -26,7 +26,7 @@ Open格式转换 是一款专为 **Linux 系统开发** 的 **图形化格式转
 项目基于以下开源项目构建：
 
 - **界面框架**：[PySide6](https://doc.qt.io/qtforpython/)（Qt6 的 Python 绑定，支持跨平台 GUI 开发）
-- **核心引擎**：[FFmpeg-python](https://github.com/kkroening/ffmpeg-python)（基于 FFmpeg 的 Python 接口，实现格式转换功能）
+- **核心引擎**：[FFmpeg](https://ffmpeg.org/)（基于 FFmpeg，实现格式转换功能）
 - **打包工具**：[PyInstaller](https://pyinstaller.org/)（用于生成各平台可执行文件）
 
 ## 贡献与反馈
