@@ -1,0 +1,19 @@
+<RCC>
+  <qresource prefix="icon">
+    <file>icon/保存_save.svg</file>
+    <file>icon/开始_play.svg</file>
+    <file>icon/配置_config.svg</file>
+    <file>icon/清除_clear.svg</file>
+    <file>icon/确定_check.svg</file>
+    <file>icon/视频_video-two.svg</file>
+    <file>icon/首页_home.svg</file>
+    <file>icon/停止_pause-one.svg</file>
+    <file>icon/文档详情_doc-detail.svg</file>
+    <file>icon/文件夹_seo-folder.svg</file>
+    <file>icon/文件添加_file-addition.svg</file>
+    <file>icon/压缩_compression.svg</file>
+    <file>icon/移除_close.svg</file>
+    <file>icon/音频文件_audio-file.svg</file>
+    <file>icon/照片_pic.svg</file>
+  </qresource>
+</RCC>
