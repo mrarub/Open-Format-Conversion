@@ -38,6 +38,15 @@ Open 格式转换 是一款专为 **Linux 系统开发** 的 **图形化格式�
 - Pillow：https://github.com/python-pillow/Pillow
 - PyInstaller：https://github.com/pyinstaller/pyinstaller
 
+源码使用
+```txt
+git clone git@github.com:mrarub/Open-Format-Conversion.git
+cd Open-Format-Conversion
+pip install -r requirements.txt
+wget https://mrarub.eu.org/open.zip
+unzip open.zip -d page
+python main.py
+```
 ## 贡献与反馈
 
 欢迎通过 GitHub/Gitee 提交 Issue 或 Pull Request 参与项目改进。  
