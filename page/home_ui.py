@@ -317,6 +317,12 @@ class Ui_MainWindow(object):
         self.comboBox_5.setObjectName(u"comboBox_5")
         self.comboBox_5.setGeometry(QRect(550, 100, 81, 31))
         self.stackedWidget.addWidget(self.page_4)
+        self.pushButton_24 = QPushButton(self.centralwidget)
+        self.pushButton_24.setObjectName(u"pushButton_24")
+        self.pushButton_24.setGeometry(QRect(0, 300, 141, 61))
+        self.pushButton_24.setFont(font1)
+        self.pushButton_24.setStyleSheet(u"")
+        self.pushButton_24.setIcon(icon3)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
@@ -351,10 +357,25 @@ class Ui_MainWindow(object):
         self.action_3.setText(QCoreApplication.translate("MainWindow", u"\u77f3\u9752\u7070", None))
         self.action_2.setText(QCoreApplication.translate("MainWindow", u"\u6de1\u84dd\u68a6\u5e7b", None))
         self.action_4.setText(QCoreApplication.translate("MainWindow", u"\u73cd\u73e0\u767d", None))
+#if QT_CONFIG(tooltip)
+        self.pushButton.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\u7a0b\u5e8f\u9996\u9875</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"\u9996\u9875", None))
+#if QT_CONFIG(tooltip)
+        self.pushButton_2.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\u97f3\u9891\u683c\u5f0f\u8f6c\u6362</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"\u97f3\u9891", None))
+#if QT_CONFIG(tooltip)
+        self.pushButton_3.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\u56fe\u7247\u683c\u5f0f\u8f6c\u6362</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"\u56fe\u7247", None))
+#if QT_CONFIG(tooltip)
+        self.pushButton_4.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\u89c6\u9891\u538b\u7f29</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"\u89c6\u9891\u538b\u7f29", None))
+#if QT_CONFIG(tooltip)
+        self.pushButton_1.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\u89c6\u9891\u683c\u5f0f\u8f6c\u6362</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.pushButton_1.setText(QCoreApplication.translate("MainWindow", u"\u89c6\u9891", None))
         self.textEdit.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
@@ -363,7 +384,7 @@ class Ui_MainWindow(object):
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt;\">Open\u683c\u5f0f\u8f6c\u6362 v1.0</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt;\">Open\u683c\u5f0f\u8f6c\u6362 v1.1</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">\u9879"
                         "\u76ee\u7b80\u4ecb</span></p>\n"
@@ -384,28 +405,38 @@ class Ui_MainWindow(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\uff08\u6ce8\uff1a\u53ef\u5728 GitHub/Gitee \u4ed3\u5e93\u9875\u9762\u53f3\u4e0a\u89d2\u627e\u5230\u661f\u661f\u56fe\u6807\u54e6\uff5e\uff09</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">\u6280\u672f\u6808</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">\u9879\u76ee\u57fa\u4e8e\u4ee5\u4e0b\u5f00\u6e90\u9879"
-                        "\u76ee\u6784\u5efa\uff1a</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">\u754c\u9762\u6846\u67b6\uff1aPySide6\uff08Qt6 \u7684 Python \u7ed1\u5b9a\uff0c\u652f\u6301\u8de8\u5e73\u53f0 GUI \u5f00\u53d1\uff09</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">\u6838\u5fc3\u5f15\u64ce\uff1aFFmpeg\uff08\u57fa\u4e8e FFmpeg\uff0c\u5b9e\u73b0\u683c\u5f0f\u8f6c\u6362\u529f\u80fd\uff09</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">\u6253\u5305\u5de5\u5177\uff1aPyInstaller\uff08\u7528\u4e8e\u751f\u6210\u5404\u5e73\u53f0\u53ef\u6267\u884c\u6587\u4ef6\uff09</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-r"
-                        "ight:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">\u9879\u76ee\u4f7f\u7528\u4e86\u4ee5\u4e0b\u5f00\u6e90"
+                        "\u9879\u76ee\uff1a</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">PySide6\uff1a</span><a href=\"https://code.qt.io/cgit/pyside\"><span style=\" text-decoration: underline; color:#0000ff;\">https://code.qt.io/cgit/pyside</span></a></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">FFmpeg\uff1a</span><a href=\"https://github.com/FFmpeg/FFmpeg\"><span style=\" text-decoration: underline; color:#0000ff;\">https://github.com/FFmpeg/FFmpeg</span></a></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">onnxruntime\uff1a</span><a href=\"https://github.com/microsoft/onnxruntime\"><span style=\" text-decoration: underline; color:#0000ff;\">https://github.com/microsoft/onnxruntime</s"
+                        "pan></a></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">U-2-Net\uff1a</span><a href=\"https://github.com/xuebinqin/U-2-Net\u200b\"><span style=\" text-decoration: underline; color:#0000ff;\">https://github.com/xuebinqin/U-2-Net\u200b</span></a></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">Real-ESRGAN\uff1a</span><a href=\"https://github.com/xinntao/Real-ESRGAN\"><span style=\" text-decoration: underline; color:#0000ff;\">https://github.com/xinntao/Real-ESRGAN</span></a></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">Pillow<span style=\" font-size:10pt;\">\uff1a</span><a href=\"https://github.com/xinntao/Real-ESRGAN\"><span style=\" text-decoration: underline; color:#0000ff;\">https://github.com/python-"
+                        "pillow/Pillow</span></a></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">PyInstaller\uff1a</span><a href=\"https://github.com/pyinstaller/pyinstaller\"><span style=\" text-decoration: underline; color:#0000ff;\">https://github.com/pyinstaller/pyinstaller</span></a></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#0000ff;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">\u8d21\u732e\u4e0e\u53cd\u9988</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">\u6b22\u8fce\u901a\u8fc7 GitHub/Gitee \u63d0\u4ea4 Issue \u6216 Pull Request \u53c2\u4e0e\u9879\u76ee\u6539\u8fdb\uff01</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">\u6b22\u8fce\u901a\u8fc7 GitHub/Gitee \u63d0\u4ea4 Issue \u6216 Pull Request \u53c2"
+                        "\u4e0e\u9879\u76ee\u6539\u8fdb\uff01</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">\u5982\u9700\u5e2e\u52a9\u6216\u53cd\u9988\u95ee\u9898\uff0c\u53ef\u901a\u8fc7\u5b98\u65b9\u7f51\u7ad9\u6216\u4ed3\u5e93 Issues \u8054\u7cfb\u5f00\u53d1\u8005\u3002</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-inden"
-                        "t:0; text-indent:0px; font-size:10pt;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">\u66f4\u65b0\u65e5\u5fd7:</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">0.9 \u7b2c\u4e00\u4e2a\u53d1\u884c\u7248\u672c</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">0.9.1 \u4fee\u590d\u95ee\u9898:\u89c6\u9891\u538b\u7f29\u53c2\u6570\u4e0d\u751f\u6548\u95ee\u9898\u3002</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">           \u589e\u52a0\u529f\u80fd:\u8f6c\u6362\u6267\u884c\u5b8c\uff0c\u70b9\u51fb\u5b8c\u6210\u81ea\u52a8\u6253\u5f00\u8f93\u51fa"
-                        "\u76ee\u5f55</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; marg"
+                        "in-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">0.9.1 \u4fee\u590d\u95ee\u9898:\u89c6\u9891\u538b\u7f29\u53c2\u6570\u4e0d\u751f\u6548\u95ee\u9898\u3002</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">           \u589e\u52a0\u529f\u80fd:\u8f6c\u6362\u6267\u884c\u5b8c\uff0c\u70b9\u51fb\u5b8c\u6210\u81ea\u52a8\u6253\u5f00\u8f93\u51fa\u76ee\u5f55</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">0.9.2 <span style=\" font-size:10pt;\">\u589e\u52a0\u529f\u80fd:\u5728\u521b\u5efa\u65b0\u4efb\u52a1\u524d\u589e\u52a0\u72b6\u6001\u6821\u9a8c\u903b\u8f91\uff0c\u5f53\u68c0\u6d4b\u5230\u5b58\u5728\u6b63\u5728\u8fd0\u884c\u4efb\u52a1\u65f6\uff0c\u963b\u65ad\u65b0\u4efb\u52a1\u542f\u52a8\u5e76\u89e6\u53d1\u53cb\u597d\u63d0\u793a\u673a\u5236</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">0.9.3 \u4fee\u590d\u95ee\u9898:\u4efb\u52a1\u6267\u884c\u5b8c\u6210\u540e\uff0c\u8f93\u51fa\u76ee\u5f55\u7684\u6253\u5f00\u903b\u8f91\u7531 &quot;\u6839\u636e\u505c\u7559\u9875\u9762&quot; \u8c03\u6574\u4e3a &quot;\u6839\u636e\u5b9e\u9645\u6267\u884c\u7684\u4efb\u52a1&quot;<br />1.0 \u589e\u52a0\u529f\u80fd:\u300c\u4e3b\u9898\u76ae\u80a4\u989c\u8272\u8c03\u8282\u300d"
-                        "\u529f\u80fd\uff0c\u652f\u6301\u4e2a\u6027\u5316\u8bbe\u7f6e\uff0c\u6253\u9020\u4e13\u5c5e\u754c\u9762\u98ce\u683c</span></p>\n"
+"<p style=\" "
+                        "margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">0.9.3 \u4fee\u590d\u95ee\u9898:\u4efb\u52a1\u6267\u884c\u5b8c\u6210\u540e\uff0c\u8f93\u51fa\u76ee\u5f55\u7684\u6253\u5f00\u903b\u8f91\u7531 &quot;\u6839\u636e\u505c\u7559\u9875\u9762&quot; \u8c03\u6574\u4e3a &quot;\u6839\u636e\u5b9e\u9645\u6267\u884c\u7684\u4efb\u52a1&quot;<br />1.0 \u589e\u52a0\u529f\u80fd:\u300c\u4e3b\u9898\u76ae\u80a4\u989c\u8272\u8c03\u8282\u300d\u529f\u80fd\uff0c\u652f\u6301\u4e2a\u6027\u5316\u8bbe\u7f6e\uff0c\u6253\u9020\u4e13\u5c5e\u754c\u9762\u98ce\u683c</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">       \u7a0b\u5e8f\u4f18\u5316:\u7cbe\u7b80\u7a0b\u5e8f\u4ee3\u7801\u7ed3\u6784\uff0c\u79fb\u9664\u5197\u4f59\u4e0e\u65e0\u7528\u4ee3\u7801</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">                          \u7a0b\u5e8f\u754c\u9762\u5e03\u5c40\u8c03\u6574\u4e3a\u300c\u56fa\u5b9a\u6a21\u5f0f\u300d\uff0c\u589e\u5f3a\u4f7f\u7528\u7a33\u5b9a\u6027\uff0c\u5fae\u8c03\u7a0b\u5e8fUI\u754c\u9762</span></p></body></html>", None))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-rig"
+                        "ht:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">                          \u7a0b\u5e8f\u754c\u9762\u5e03\u5c40\u8c03\u6574\u4e3a\u300c\u56fa\u5b9a\u6a21\u5f0f\u300d\uff0c\u589e\u5f3a\u4f7f\u7528\u7a33\u5b9a\u6027\uff0c\u5fae\u8c03\u7a0b\u5e8fUI\u754c\u9762</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">1.1 \u589e\u52a0\u529f\u80fd:\u4e00\u952e\u62a0\u56fe\uff1a\u667a\u80fd\u5206\u5272\u4e3b\u4f53\u4e0e\u80cc\u666f\uff0c\u652f\u6301\u591a\u7c7b\u578b\u56fe\u50cf\u200b</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">                          \u80cc\u666f\u66f4\u6362\uff1a\u652f\u6301\u66f4\u6362\u80cc\u666f\u989c\u8272</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-ind"
+                        "ent:0px;\"><span style=\" font-size:10pt;\">                          \u56fe\u7247\u6e05\u6670\u5316\uff1a\u6df1\u5ea6\u5b66\u4e60\u589e\u5f3a\u7ec6\u8282\uff0c\u4f18\u5316\u753b\u8d28</span></p></body></html>", None))
         self.comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"MP4", None))
         self.comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"MKV", None))
         self.comboBox.setItemText(2, QCoreApplication.translate("MainWindow", u"MOV", None))
@@ -413,6 +444,9 @@ class Ui_MainWindow(object):
         self.comboBox.setItemText(4, QCoreApplication.translate("MainWindow", u"GIF", None))
 
         self.label.setText(QCoreApplication.translate("MainWindow", u"\u89c6\u9891\u683c\u5f0f\u8f6c\u6362", None))
+#if QT_CONFIG(tooltip)
+        self.pushButton_5.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\u8fd9\u662f\u9ad8\u7ea7\u914d\u7f6e\uff0c\u9700\u8981\u6709\u57fa\u7840\u7684\u4e86\u89e3</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"\u9ad8\u7ea7\u914d\u7f6e", None))
         self.pushButton_6.setText(QCoreApplication.translate("MainWindow", u"\u9009\u62e9\u6587\u4ef6", None))
         self.pushButton_7.setText(QCoreApplication.translate("MainWindow", u"\u79fb\u9664", None))
@@ -430,6 +464,9 @@ class Ui_MainWindow(object):
         self.comboBox_2.setItemText(8, QCoreApplication.translate("MainWindow", u"MP2", None))
         self.comboBox_2.setItemText(9, QCoreApplication.translate("MainWindow", u"WV", None))
 
+#if QT_CONFIG(tooltip)
+        self.pushButton_10.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\u8fd9\u662f\u9ad8\u7ea7\u914d\u7f6e\uff0c\u9700\u8981\u6709\u57fa\u7840\u7684\u4e86\u89e3</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.pushButton_10.setText(QCoreApplication.translate("MainWindow", u"\u9ad8\u7ea7\u914d\u7f6e", None))
         self.pushButton_11.setText(QCoreApplication.translate("MainWindow", u"\u9009\u62e9\u6587\u4ef6", None))
         self.pushButton_12.setText(QCoreApplication.translate("MainWindow", u"\u79fb\u9664", None))
@@ -444,6 +481,9 @@ class Ui_MainWindow(object):
         self.comboBox_3.setItemText(5, QCoreApplication.translate("MainWindow", u"JPEG", None))
         self.comboBox_3.setItemText(6, QCoreApplication.translate("MainWindow", u"ICO", None))
 
+#if QT_CONFIG(tooltip)
+        self.pushButton_15.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\u8fd9\u662f\u9ad8\u7ea7\u914d\u7f6e\uff0c\u9700\u8981\u6709\u57fa\u7840\u7684\u4e86\u89e3</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.pushButton_15.setText(QCoreApplication.translate("MainWindow", u"\u9ad8\u7ea7\u914d\u7f6e", None))
         self.pushButton_16.setText(QCoreApplication.translate("MainWindow", u"\u9009\u62e9\u6587\u4ef6", None))
         self.pushButton_17.setText(QCoreApplication.translate("MainWindow", u"\u79fb\u9664", None))
@@ -462,10 +502,20 @@ class Ui_MainWindow(object):
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"CRF", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"\u5bbd\u5ea6", None))
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"\u9ad8\u5ea6", None))
+#if QT_CONFIG(tooltip)
+        self.lineEdit.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>CRF\u662f\u538b\u7f29\u7b49\u7ea7\uff0c\u4e00\u822c\u9ed8\u8ba4\u5373\u53ef\u3002\u53ea\u53ef\u586b\u51990-51\u8303\u56f4(\u4e00\u822c\u6700\u597d\u572820-35\u5185)\u3002\u6570\u5b57\u8d8a\u9ad8\u538b\u7f29\u8d8a\u5c0f</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
         self.lineEdit.setText(QCoreApplication.translate("MainWindow", u"23", None))
         self.comboBox_5.setItemText(0, QCoreApplication.translate("MainWindow", u"libx264", None))
         self.comboBox_5.setItemText(1, QCoreApplication.translate("MainWindow", u"libx265", None))
 
+#if QT_CONFIG(tooltip)
+        self.comboBox_5.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\u8fd9\u662f\u89c6\u9891\u7f16\u7801\u5668\uff0c\u4e00\u822c\u9ed8\u8ba4\u5373\u53ef\u3002libx264\u517c\u5bb9\u6027\u597d\uff0c\u5904\u7406\u901f\u5ea6\u5feb\u3002libx265\u538b\u7f29\u7a0b\u5e8f\u66f4\u597d\uff0c\u901f\u5ea6\u7565\u6162</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(tooltip)
+        self.pushButton_24.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>\u4e00\u952e\u62a0\u56fe\uff0c\u66f4\u6362\u80cc\u666f\uff0c\u56fe\u7247\u9ad8\u6e05\u5904\u7406</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.pushButton_24.setText(QCoreApplication.translate("MainWindow", u"\u56fe\u7247\u5904\u7406", None))
         self.menu.setTitle(QCoreApplication.translate("MainWindow", u"\u76ae\u80a4", None))
     # retranslateUi
 

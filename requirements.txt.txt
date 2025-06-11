@@ -1,0 +1,4 @@
+pyside6
+pillow
+onnxruntime
+pyinstaller

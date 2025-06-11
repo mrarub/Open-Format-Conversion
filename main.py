@@ -12,6 +12,7 @@ from page.video import Ui_Form as VideoUiForm
 from page.music import Ui_Form as MusicUiForm
 from page.image import Ui_Form as ImageUiForm
 from page.output_ui import Ui_Form as OutputUiForm
+from page.koutu import PhotoIDTool  # 导入抠图窗口类
 from PySide6.QtGui import QIntValidator
 from PySide6.QtCore import QRegularExpression
 from PySide6.QtGui import QRegularExpressionValidator
@@ -62,7 +63,7 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        # 新增：检查并创建 ui_color.ini 文件
+        # 检查并创建 ui_color.ini 文件
         config_dir = "config"
         ui_color_path = os.path.join(config_dir, "ui_color.ini")
         if not os.path.exists(config_dir):
@@ -116,10 +117,30 @@ class MainWindow(QMainWindow):
         self.ui.pushButton_19.clicked.connect(self.execute_ffmpeg)
         self.ui.pushButton_23.clicked.connect(self.execute_ffmpeg)
 
+        # 一键抠图按钮事件
+        self.ui.pushButton_24.clicked.connect(self.open_koutu_window)
+
         # 默认显示首页
         self.show_home_page()
         self.output_window = None
         self.output_worker = None
+
+        # 允许的文件扩展名
+        self.allowed_exts_video = [
+            "3g2", "3gp", "amv", "asf", "avi", "divx", "dv", "f4v", "flv", "gif", "m2ts", "m4v",
+            "mkv", "mov", "mp4", "mpeg", "mpg", "mts", "mxf", "nut", "ogv", "rm", "roq", "swf",
+            "ts", "vob", "webm", "wmv", "yuv", "avs", "ivf", "mj2", "nsv", "r3d", "thp", "vmd", "xmv"
+        ]
+        self.allowed_exts_audio = [
+            "aac", "ac3", "aiff", "alac", "amr", "ape", "au", "dts", "eac3", "flac", "m4a", "m4b", "mka", "mlp",
+            "mp2", "mp3", "mpc", "oga", "ogg", "opus", "ra", "tak", "tta", "voc", "wav", "wma", "wv", "spx",
+            "aif", "caf", "snd", "m3u", "pls", "midi", "mid", "rmi", "aacp"
+        ]
+        self.allowed_exts_image = [
+            "jpg", "jpeg", "png", "bmp", "tiff", "tif", "webp", "gif", "ico", "jp2", "j2k", "pbm", "pgm", "ppm",
+            "pam", "pcx", "tga", "sgi", "sun", "ras", "xbm", "xpm", "dds", "exr", "fits", "jpe", "svg", "heic",
+            "heif", "avif"
+        ]
 
     def show_home_page(self):
         self.ui.stackedWidget.setCurrentIndex(0)  # 显示page(首页)
@@ -170,11 +191,41 @@ class MainWindow(QMainWindow):
         table_widget.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
         # 绑定添加文件按钮点击事件
-        add_button.clicked.connect(lambda: self.add_files(table_widget))
+        if add_button.objectName() == "pushButton_6" or add_button.objectName() == "pushButton_20":
+            add_button.clicked.connect(lambda: self.add_files_filter(table_widget, self.allowed_exts_video, "视频"))
+        elif add_button.objectName() == "pushButton_11":
+            add_button.clicked.connect(lambda: self.add_files_filter(table_widget, self.allowed_exts_audio, "音频"))
+        elif add_button.objectName() == "pushButton_16":
+            add_button.clicked.connect(lambda: self.add_files_filter(table_widget, self.allowed_exts_image, "图片"))
+        else:
+            add_button.clicked.connect(lambda: self.add_files(table_widget))
         # 绑定移除按钮点击事件
         remove_button.clicked.connect(lambda: self.remove_selected_row(table_widget))
         # 绑定移除全部按钮点击事件
         clear_button.clicked.connect(lambda: self.clear_table(table_widget))
+
+    def add_files_filter(self, table_widget, allowed_exts, label):
+        file_dialog = QFileDialog(self)
+        file_dialog.setFileMode(QFileDialog.ExistingFiles)
+        ext_str = " ".join([f"*.{ext}" for ext in allowed_exts])
+        file_dialog.setNameFilters([
+            f"支持的{label}文件 ({ext_str})",
+            "所有文件 (*)"
+        ])
+        file_dialog.selectNameFilter(f"支持的{label}文件 ({ext_str})")
+        if file_dialog.exec():
+            file_paths = file_dialog.selectedFiles()
+            existing_paths = []
+            for row in range(table_widget.rowCount()):
+                item = table_widget.item(row, 0)
+                if item:
+                    existing_paths.append(item.text())
+            for file_path in file_paths:
+                if file_path not in existing_paths:
+                    row_position = table_widget.rowCount()
+                    table_widget.insertRow(row_position)
+                    item = QTableWidgetItem(file_path)
+                    table_widget.setItem(row_position, 0, item)
 
     def add_files(self, table_widget):
         # 打开文件选择框，允许多选
@@ -244,7 +295,7 @@ class MainWindow(QMainWindow):
         params = {}
         if not os.path.exists(config_path):  # 文件不存在
             return params
-        
+
         with open(config_path, 'r', encoding='utf-8') as f:
             for line in f.readlines():
                 line = line.strip()
@@ -257,7 +308,7 @@ class MainWindow(QMainWindow):
         return params
 
     def execute_ffmpeg(self):
-        # 新增：检查是否有正在运行的任务
+        # 检查是否有正在运行的任务
         if self.output_worker is not None and self.output_worker.process.state() == QProcess.Running:
             QMessageBox.warning(self, "警告", "当前有任务正在运行，请等待完成后再尝试！")
             return
@@ -313,7 +364,7 @@ class MainWindow(QMainWindow):
             # 判断是否为GIF格式
             is_gif = output_format.lower() == "gif"
             config = self.read_config("config/video_settings.ini")
-            
+
             if not is_gif:  # 非GIF格式时添加配置参数
                 # 保留原有参数映射（crf/帧数/编码）
                 param_map = {
@@ -382,12 +433,12 @@ class MainWindow(QMainWindow):
             encoder = self.ui.comboBox_5.currentText()
             if encoder and encoder != "默认":
                 ffmpeg_args.extend(["-c:v", encoder])
-            
+
             # 2. 处理CRF值
             crf = self.ui.lineEdit.text().strip()
             if crf:
                 ffmpeg_args.extend(["-crf", crf])
-            
+
             # 3. 处理宽度和高度
             width = self.ui.lineEdit_1.text().strip()
             height = self.ui.lineEdit_2.text().strip()
@@ -515,6 +566,10 @@ class MainWindow(QMainWindow):
         color = self.read_ui_color_config()
         if color:
             widget.setStyleSheet(f"background-color: rgb({color});")
+    # 打开抠图窗口
+    def open_koutu_window(self):
+        self.koutu_window = PhotoIDTool()
+        self.koutu_window.show()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
