@@ -1,13 +1,11 @@
 # Open Format Conversion
-![1](https://github.com/user-attachments/assets/82175739-0917-4062-a567-6f92f9da88c7)
-
 
 **跨平台开源格式转换工具**
 
 ## 项目简介
 
 Open 格式转换 是一款专为 **Linux 系统开发** 的 **图形化格式转换工具**，旨在为用户提供轻量、高效且开源的跨平台格式转换解决方案。项目灵感源自 Deepin 论坛网友需求——打造一个 **Linux 原生 GUI 交互** 的开源程序。现在，除了基本的格式转换功能，还新增了一系列强大的图像处理功能。
-
+![1](https://github.com/user-attachments/assets/82175739-0917-4062-a567-6f92f9da88c7)
 ## 主要特性
 
 - **系统兼容性**：原生支持 Linux（如 Deepin、Debian、Ubuntu）。
