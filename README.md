@@ -36,14 +36,14 @@ Open 格式转换 是一款专为 **Linux 系统开发** 的 **图形化格式�
 - Pillow：https://github.com/python-pillow/Pillow
 - PyInstaller：https://github.com/pyinstaller/pyinstaller
 
-源码使用
+源码打包
 ```txt
 git clone git@github.com:mrarub/Open-Format-Conversion.git
 cd Open-Format-Conversion
 pip install -r requirements.txt
 wget https://mrarub.eu.org/open.zip
 unzip open.zip -d page
-python main.py
+pyinstaller --name "Open格式转换" --onefile --windowed --add-data "config:config" --add-data "page/*:page" --add-data "page/**/*:page" main.py
 ```
 ## 贡献与反馈
 
