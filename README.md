@@ -38,12 +38,8 @@ Open 格式转换 是一款专为 **Linux 系统开发** 的 **图形化格式�
 
 ## 源码打包
 ```txt
-git clone git@github.com:mrarub/Open-Format-Conversion.git
-cd Open-Format-Conversion
-pip install -r requirements.txt
-wget https://mrarub.eu.org/open.zip
-unzip open.zip -d page
-pyinstaller --name "Open格式转换" --onefile --windowed --add-data "config:config" --add-data "page/*:page" --add-data "page/**/*:page" main.py
+把命令复制到终端执行
+curl -o open.bash https://mrarub.eu.org/sh/open.bash && chmod +x open.bash && bash ./open.bash
 ```
 ## 贡献与反馈
 
