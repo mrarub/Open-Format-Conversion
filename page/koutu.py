@@ -5,16 +5,18 @@ import onnxruntime as ort
 from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
                               QLabel, QPushButton, QFileDialog, QColorDialog, QSizePolicy, 
                               QMessageBox, QProgressDialog, QFrame)
-from PySide6.QtGui import QPixmap, QImage
+from PySide6.QtGui import QPixmap
 from PySide6.QtCore import Qt, Signal, QThread, QObject
 import os
+import tempfile
+import shutil
 # 指定为xcb
 os.environ['QT_QPA_PLATFORM'] = 'xcb'
 import subprocess
 
 
 class PhotoProcessor(QObject):
-    finished = Signal(QImage)
+    finished = Signal(str)  # 返回临时文件路径
     batch_finished = Signal()
     error = Signal(str)
     progress = Signal(int)
@@ -28,29 +30,35 @@ class PhotoProcessor(QObject):
         self.kwargs = kwargs
         self.batch_mode = kwargs.get('batch_mode', False)
         self.output_dir = kwargs.get('output_dir', None)
+        self._subprocess = None  # 保存子进程对象
         if PhotoProcessor.ort_session is None:
             model_path = os.path.join(os.path.dirname(__file__), "u2netp.onnx")
             PhotoProcessor.ort_session = ort.InferenceSession(model_path, providers=['CPUExecutionProvider'])
         self.ort_session = PhotoProcessor.ort_session
+
+    def terminate(self):
+        """终止子进程"""
+        if self._subprocess and self._subprocess.poll() is None:
+            try:
+                self._subprocess.terminate()
+            except Exception:
+                pass
 
     def process(self):
         try:
             if isinstance(self.image_path, list):  # 批量处理模式
                 self._process_batch()
             else:  # 单张图片处理模式
-                if isinstance(self.image_path, Image.Image):
-                    img = self.image_path
-                else:
-                    img = Image.open(self.image_path)
+                img_path = self.image_path
                 if self.operation == "remove_bg":
-                    result = self._remove_background(img)
+                    result_path = self._remove_background(img_path)
                 elif self.operation == "change_bg_color":
-                    result = self._change_background_color(img)
+                    result_path = self._change_background_color(img_path)
                 elif self.operation == "enhance_image":
-                    result = self._enhance_image(self.image_path)
+                    result_path = self._enhance_image(img_path)
                 else:
                     raise ValueError("Unknown operation")
-                self.finished.emit(result)
+                self.finished.emit(result_path)
         except Exception as e:
             self.error.emit(str(e))
 
@@ -106,16 +114,22 @@ class PhotoProcessor(QObject):
         except Exception as e:
             self.error.emit(str(e))
 
-    def _remove_background(self, img):
+    def _remove_background(self, img_path):
+        img = Image.open(img_path)
         output = self.remove_bg_onnx(img)
-        return self._pil_to_qimage(output)
+        temp_file = tempfile.NamedTemporaryFile(suffix=".png", delete=False)
+        output.save(temp_file.name)
+        return temp_file.name
 
-    def _change_background_color(self, img):
+    def _change_background_color(self, img_path):
         color = self.kwargs.get('color', (255, 255, 255))
+        img = Image.open(img_path)
         no_bg = self.remove_bg_onnx(img)
         background = Image.new('RGB', no_bg.size, color)
         background.paste(no_bg, (0, 0), no_bg)
-        return self._pil_to_qimage(background)
+        temp_file = tempfile.NamedTemporaryFile(suffix=".png", delete=False)
+        background.save(temp_file.name)
+        return temp_file.name
 
     def remove_bg_onnx(self, img):
         # 预处理
@@ -138,23 +152,8 @@ class PhotoProcessor(QObject):
         img_np[..., 3] = mask_np
         return Image.fromarray(img_np)
 
-    def _pil_to_qimage(self, pil_img):
-        try:
-            if pil_img.mode == 'RGBA':
-                data = pil_img.convert('RGBA').tobytes('raw', 'RGBA')
-                return QImage(data, pil_img.width, pil_img.height, pil_img.width * 4, QImage.Format_RGBA8888)
-            else:
-                data = pil_img.convert('RGB').tobytes('raw', 'RGB')
-                return QImage(data, pil_img.width, pil_img.height, pil_img.width * 3, QImage.Format_RGB888)
-        except Exception as e:
-            self.error.emit(str(e))
-            return None
-
     def _enhance_image(self, image_path):
         """调用realesrgan-ncnn-vulkan增强图片清晰度"""
-        import tempfile
-        import shutil
-
         exe_path = os.path.join(os.path.dirname(__file__), "realesrgan-ncnn-vulkan")
         temp_dir = tempfile.mkdtemp()
         output_path = os.path.join(temp_dir, "enhanced.png")
@@ -166,16 +165,19 @@ class PhotoProcessor(QObject):
         ]
         try:
             self.progress.emit(10)
-            subprocess.run(cmd, check=True)
+            # 使用Popen保存进程对象
+            self._subprocess = subprocess.Popen(cmd)
+            self._subprocess.wait()
+            if self._subprocess.returncode != 0:
+                raise RuntimeError("realesrgan-ncnn-vulkan 运行失败")
             self.progress.emit(80)
-            enhanced_img = Image.open(output_path)
-            qimg = self._pil_to_qimage(enhanced_img)
+            temp_file = tempfile.NamedTemporaryFile(suffix=".png", delete=False)
+            Image.open(output_path).save(temp_file.name)
             self.progress.emit(100)
-            return qimg
+            return temp_file.name
         except Exception as e:
             raise RuntimeError(f"图片增强失败: {e}")
         finally:
-            # 优化3: 清理更健壮
             try:
                 shutil.rmtree(temp_dir)
             except Exception:
@@ -186,13 +188,13 @@ class PhotoIDTool(QMainWindow):
         super().__init__()
         self.setWindowTitle("一键抠图")
         self.setMinimumSize(800, 600)
-        
-        # 初始化变量
-        self.current_image_path = None
-        self.original_pixmap = None
-        self.processed_pixmap = None
-        self.bg_color = (255, 255, 255)  # 默认白色背景
-        
+        self.current_image_path = None  # 当前显示的临时文件路径
+        self.original_image_path = None # 原始图片的临时文件路径
+        self.processed_image_path = None # 处理后图片的临时文件路径
+        self.bg_color = (255, 255, 255)
+        self.current_pixmap = None  # 新增，保存当前QPixmap
+        self._temp_files = []  # 记录所有临时文件路径
+
         # 创建界面
         self._create_ui()
 
@@ -200,17 +202,17 @@ class PhotoIDTool(QMainWindow):
         """创建主界面"""
         main_widget = QWidget()
         self.setCentralWidget(main_widget)
-        
+
         # 主布局
         main_layout = QHBoxLayout(main_widget)
-        
+
         # 图像显示区域
         self.image_label = QLabel()
         self.image_label.setAlignment(Qt.AlignCenter)
         self.image_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.image_label.setStyleSheet("QLabel { background-color: #333; }")
         main_layout.addWidget(self.image_label, 70)
-        
+
         # 控制面板
         control_panel = QWidget()
         control_panel.setFixedWidth(250)
@@ -218,12 +220,12 @@ class PhotoIDTool(QMainWindow):
 
         # 单张处理区域
         control_layout.addWidget(QLabel("单张处理"))
-        
+
         # 打开按钮
         self.open_btn = QPushButton("打开图片")
         self.open_btn.clicked.connect(self.open_image)
         control_layout.addWidget(self.open_btn)
-        
+
         # 恢复原图按钮
         self.restore_btn = QPushButton("恢复原图")
         self.restore_btn.setEnabled(False)
@@ -241,23 +243,23 @@ class PhotoIDTool(QMainWindow):
         self.enhance_btn.clicked.connect(lambda: self.process_image("enhance_image"))
         self.enhance_btn.setEnabled(False)
         control_layout.addWidget(self.enhance_btn)
-        
+
         # 单张背景颜色设置
         bg_color_layout = QHBoxLayout()
         self.bg_color_btn = QPushButton("背景颜色")
         self.bg_color_btn.clicked.connect(self.choose_bg_color)
         bg_color_layout.addWidget(self.bg_color_btn)
-        
+
         self.bg_color_display = QLabel()
         self.bg_color_display.setFixedSize(30, 30)
         self.bg_color_display.setStyleSheet("background-color: white; border: 1px solid black;")
         bg_color_layout.addWidget(self.bg_color_display)
-        
+
         self.apply_bg_color_btn = QPushButton("更换背景")
         self.apply_bg_color_btn.clicked.connect(lambda: self.process_image("change_bg_color", color=self.bg_color))
         self.apply_bg_color_btn.setEnabled(False)
         bg_color_layout.addWidget(self.apply_bg_color_btn)
-        
+
         control_layout.addLayout(bg_color_layout)
 
         # 保存结果按钮，移动到这里
@@ -271,14 +273,14 @@ class PhotoIDTool(QMainWindow):
         separator.setFrameShape(QFrame.HLine)
         separator.setFrameShadow(QFrame.Sunken)
         control_layout.addWidget(separator)
-        
+
         # 批量处理区域
         control_layout.addWidget(QLabel("\n批量处理"))
-        
+
         self.batch_open_btn = QPushButton("批量去除背景")
         self.batch_open_btn.clicked.connect(self.batch_open_images)
         control_layout.addWidget(self.batch_open_btn)
-        
+
         self.batch_bg_btn = QPushButton("批量更换背景")
         self.batch_bg_btn.clicked.connect(self.batch_change_background)
         control_layout.addWidget(self.batch_bg_btn)
@@ -297,11 +299,16 @@ class PhotoIDTool(QMainWindow):
             self, "选择图片", "", 
             "图片文件 (*.png *.jpg *.jpeg *.bmp *.tiff *.webp *.ico)"
         )
-        
+
         if file_path:
-            self.current_image_path = file_path
-            self.original_pixmap = QPixmap(file_path)
-            self.display_image(self.original_pixmap)
+            # 拷贝到临时文件，后续所有操作都基于临时文件
+            temp_file = tempfile.NamedTemporaryFile(suffix=os.path.splitext(file_path)[1], delete=False)
+            Image.open(file_path).save(temp_file.name)
+            self.current_image_path = temp_file.name
+            self.original_image_path = temp_file.name  # 新增：保存原图路径
+            self._temp_files.append(temp_file.name)
+            self.current_pixmap = QPixmap(self.current_image_path)  # 新增
+            self.display_image()
             self.save_btn.setEnabled(True)
             self.remove_bg_btn.setEnabled(True)
             self.apply_bg_color_btn.setEnabled(True)
@@ -310,9 +317,11 @@ class PhotoIDTool(QMainWindow):
 
     def restore_original_image(self):
         """恢复原图"""
-        if self.original_pixmap:
-            self.display_image(self.original_pixmap)
-            self.processed_pixmap = None
+        if self.original_image_path:
+            self.current_image_path = self.original_image_path
+            self.current_pixmap = QPixmap(self.current_image_path)  # 新增：刷新pixmap
+            self.display_image()
+            self.processed_image_path = None
 
     def start_batch_process(self, operation, file_paths, output_dir, dialog_title, dialog_text, **kwargs):
         """通用批量处理启动方法"""
@@ -426,7 +435,7 @@ class PhotoIDTool(QMainWindow):
 
     def save_image(self):
         """保存处理后的图片"""
-        if not self.processed_pixmap:
+        if not self.current_image_path:
             QMessageBox.warning(self, "警告", "没有可保存的处理结果!")
             return
         file_path, _ = QFileDialog.getSaveFileName(
@@ -435,7 +444,7 @@ class PhotoIDTool(QMainWindow):
         if file_path:
             if not any(file_path.lower().endswith(ext) for ext in ['.png', '.jpg', '.jpeg', '.bmp', '.gif', '.tiff', '.webp', '.ico']):
                 file_path += '.png'
-            self.processed_pixmap.save(file_path)
+            Image.open(self.current_image_path).save(file_path)
             QMessageBox.information(self, "成功", "图片已保存!")
             file_dir = os.path.dirname(os.path.abspath(file_path))
             try:
@@ -446,10 +455,10 @@ class PhotoIDTool(QMainWindow):
             except Exception as e:
                 QMessageBox.warning(self, "警告", f"无法打开目录: {str(e)}")
 
-    def display_image(self, pixmap):
+    def display_image(self):
         """显示图片"""
-        if not pixmap.isNull():
-            scaled_pixmap = pixmap.scaled(
+        if self.current_pixmap and not self.current_pixmap.isNull():
+            scaled_pixmap = self.current_pixmap.scaled(
                 self.image_label.size(), 
                 Qt.KeepAspectRatio, 
                 Qt.SmoothTransformation
@@ -459,8 +468,8 @@ class PhotoIDTool(QMainWindow):
     def resizeEvent(self, event):
         """窗口大小改变时调整图片"""
         super().resizeEvent(event)
-        if hasattr(self, 'image_label') and self.image_label.pixmap():
-            self.display_image(self.image_label.pixmap())
+        if hasattr(self, 'image_label') and self.current_pixmap:
+            self.display_image()
 
     def choose_bg_color(self):
         """选择背景颜色"""
@@ -474,30 +483,10 @@ class PhotoIDTool(QMainWindow):
 
     def process_image(self, operation, **kwargs):
         """处理图片"""
-        if not self.image_label.pixmap():
+        if not self.current_image_path:
             QMessageBox.warning(self, "警告", "请先打开一张图片!")
             return
-
-        # 一键清晰也处理label上的图片，先保存为临时文件再传递路径
-        if operation == "enhance_image":
-            import tempfile
-            qimg = self.image_label.pixmap().toImage().convertToFormat(QImage.Format_RGBA8888)
-            width = qimg.width()
-            height = qimg.height()
-            arr = qimg.bits().tobytes()
-            img = Image.frombytes("RGBA", (width, height), arr)
-            temp_file = tempfile.NamedTemporaryFile(suffix=".png", delete=False)
-            img.save(temp_file.name)
-            image_input = temp_file.name
-        else:
-            # QPixmap -> QImage -> PIL.Image
-            qimg = self.image_label.pixmap().toImage().convertToFormat(QImage.Format_RGBA8888)
-            width = qimg.width()
-            height = qimg.height()
-            arr = qimg.bits().tobytes()
-            img = Image.frombytes("RGBA", (width, height), arr)
-            image_input = img
-
+        image_input = self.current_image_path
         self.thread = QThread()
         self.processor = PhotoProcessor(image_input, operation, **kwargs)
         self.processor.moveToThread(self.thread)
@@ -516,6 +505,7 @@ class PhotoIDTool(QMainWindow):
             self.progress_dialog.setWindowTitle("图片修复")
             self.progress_dialog.setWindowModality(Qt.WindowModal)
             self.progress_dialog.setAutoClose(True)
+            self.progress_dialog.canceled.connect(self.cancel_enhance_process)  # 新增
             self.progress_dialog.show()
             self.processor.progress.connect(self.update_enhance_progress)
         else:
@@ -523,15 +513,30 @@ class PhotoIDTool(QMainWindow):
 
         self.thread.start()
 
+    def cancel_enhance_process(self):
+        """取消一键清晰处理"""
+        if hasattr(self, 'processor') and self.processor:
+            self.processor.terminate()
+        if hasattr(self, 'thread') and self.thread:
+            self.thread.quit()
+        self.set_buttons_enabled(True)
+        self.statusBar().showMessage("已取消处理", 3000)
+        if hasattr(self, 'progress_dialog') and self.progress_dialog:
+            self.progress_dialog.close()
+            self.progress_dialog = None
+
     def update_enhance_progress(self, value):
         """更新增强进度条"""
         if hasattr(self, 'progress_dialog') and self.progress_dialog:
             self.progress_dialog.setValue(value)
 
-    def on_processing_finished(self, qimage):
+    def on_processing_finished(self, temp_file_path):
         """处理完成"""
-        self.processed_pixmap = QPixmap.fromImage(qimage)
-        self.display_image(self.processed_pixmap)
+        self.processed_image_path = temp_file_path
+        self.current_image_path = temp_file_path
+        self._temp_files.append(temp_file_path) 
+        self.current_pixmap = QPixmap(self.current_image_path)  # 新增
+        self.display_image()
         self.set_buttons_enabled(True)
         self.statusBar().showMessage("处理完成!", 3000)
         # 关闭进度条
@@ -558,6 +563,16 @@ class PhotoIDTool(QMainWindow):
         self.apply_bg_color_btn.setEnabled(enabled)
         self.save_btn.setEnabled(enabled)
         self.enhance_btn.setEnabled(enabled)
+
+    def closeEvent(self, event):
+        """关闭窗口时自动清理所有临时文件"""
+        for f in getattr(self, "_temp_files", []):
+            try:
+                if f and os.path.exists(f):
+                    os.remove(f)
+            except Exception:
+                pass
+        event.accept()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

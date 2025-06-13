@@ -1,9 +1,9 @@
 Package: com.mrarub.open
-Version: 1.1
+Version: 1.2
 Section: utils
 Priority: optional
 Architecture: amd64
 Maintainer: mrarub
-Description: Open格式转换 v1.1
-Installed-Size: 
+Description: Open格式转换 v1.2
+Installed-Size: 112772
 Depends: ffmpeg

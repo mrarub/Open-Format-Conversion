@@ -13,15 +13,15 @@ echo "已创建 com.mrarub.open/usr/bin 目录"
 mkdir -p com.mrarub.open/usr/share/applications
 echo "已创建 com.mrarub.open/usr/share/applications 目录"
 
-mkdir -p com.mrarub.open/usr/share/icons/hicolor/256x256/apps
-echo "已创建 com.mrarub.open/usr/share/icons/hicolor/256x256/apps 目录"
+mkdir -p com.mrarub.open/usr/share/icons/hicolor/512x512/apps
+echo "已创建 com.mrarub.open/usr/share/icons/hicolor/512x512/apps 目录"
 
 # 复制文件
 cp "Open格式转换" com.mrarub.open/usr/bin/
 echo "已将 'Open格式转换' 复制到 com.mrarub.open/usr/bin/ 目录"
 
-cp open.png com.mrarub.open/usr/share/icons/hicolor/256x256/apps/com.mrarub.open.png
-echo "已将 open.png 复制到 com.mrarub.open/usr/share/icons/hicolor/256x256/apps/ 目录，并命名为 com.mrarub.open.png"
+cp open.png com.mrarub.open/usr/share/icons/hicolor/512x512/apps/com.mrarub.open.png
+echo "已将 open.png 复制到 com.mrarub.open/usr/share/icons/hicolor/512x512/apps/ 目录，并命名为 com.mrarub.open.png"
 
 # 开始计算并更新 Installed-Size
 echo "开始计算并更新 Installed-Size..."

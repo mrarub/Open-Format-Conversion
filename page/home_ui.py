@@ -384,7 +384,7 @@ class Ui_MainWindow(object):
 "li.unchecked::marker { content: \"\\2610\"; }\n"
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt;\">Open\u683c\u5f0f\u8f6c\u6362 v1.1</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt;\">Open\u683c\u5f0f\u8f6c\u6362 v1.2</span></p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:11pt;\">\u9879"
                         "\u76ee\u7b80\u4ecb</span></p>\n"
@@ -436,7 +436,12 @@ class Ui_MainWindow(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">1.1 \u589e\u52a0\u529f\u80fd:\u4e00\u952e\u62a0\u56fe\uff1a\u667a\u80fd\u5206\u5272\u4e3b\u4f53\u4e0e\u80cc\u666f\uff0c\u652f\u6301\u591a\u7c7b\u578b\u56fe\u50cf\u200b</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">                          \u80cc\u666f\u66f4\u6362\uff1a\u652f\u6301\u66f4\u6362\u80cc\u666f\u989c\u8272</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-ind"
-                        "ent:0px;\"><span style=\" font-size:10pt;\">                          \u56fe\u7247\u6e05\u6670\u5316\uff1a\u6df1\u5ea6\u5b66\u4e60\u589e\u5f3a\u7ec6\u8282\uff0c\u4f18\u5316\u753b\u8d28</span></p></body></html>", None))
+                        "ent:0px;\"><span style=\" font-size:10pt;\">                          \u56fe\u7247\u6e05\u6670\u5316\uff1a\u6df1\u5ea6\u5b66\u4e60\u589e\u5f3a\u7ec6\u8282\uff0c\u4f18\u5316\u753b\u8d28</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">1.2 \u4fee\u590d\u4f18\u5316:</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">                         \u56fe\u7247\u7f29\u653e\u6a21\u7cca\u95ee\u9898\uff1a\u4f18\u5316\u56fe\u7247\u7f29\u653e\u65f6\u7684\u6e32\u67d3\u4ee3\u7801\uff0c\u89e3\u51b3\u7a97\u53e3\u7f29\u653e\u5bfc\u81f4\u7684\u56fe\u7247\u6a21\u7cca\u95ee\u9898\uff0c\u63d0\u5347\u663e\u793a\u6e05\u6670\u5ea6\u3002</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\"> "
+                        "                        \u4e00\u952e\u4fee\u590d\u6548\u7387\u95ee\u9898\uff1a\u4f18\u5316\u4e00\u952e\u4fee\u590d\u56fe\u7247\u7684\u5904\u7406\u903b\u8f91\uff0c\u5927\u5e45\u7f29\u77ed\u4fee\u590d\u8017\u65f6\uff0c\u63d0\u5347\u64cd\u4f5c\u6d41\u7545\u5ea6\u3002</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:10pt;\">                         \u80cc\u666f\u5904\u7406\u6bdb\u8fb9\u95ee\u9898\uff1a\u6539\u8fdb\u80cc\u666f\u53bb\u9664\u4e0e\u66f4\u6362\u7684\u8fb9\u7f18\u5904\u7406\u4ee3\u7801\uff0c\u51cf\u5c11\u66f4\u6362\u80cc\u666f\u7684\u6bdb\u8fb9\u73b0\u8c61\uff0c\u4f7f\u56fe\u7247\u8fb9\u7f18\u66f4\u81ea\u7136\u3002</span></p></body></html>", None))
         self.comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"MP4", None))
         self.comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"MKV", None))
         self.comboBox.setItemText(2, QCoreApplication.translate("MainWindow", u"MOV", None))
