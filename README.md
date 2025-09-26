@@ -38,11 +38,11 @@ Open 格式转换 是一款专为 **Linux 系统开发** 的 **图形化格式�
 ## 源码打包，对于不兼容的系统，可以使用以下一键安装脚本：
 ```txt
 # 把命令复制到终端执行（GitHub）
-curl -o open-github.bash https://mrarub.eu.org/sh/open-github.bash && chmod +x open-github.bash && bash ./open-github.bash
+curl -o open-github.bash https://download.mrarub.eu.org/sh/open-github.bash && chmod +x open-github.bash && bash ./open-github.bash
 ```
 ```txt
 # 把命令复制到终端执行（国内加速）
-curl -o open.bash https://mrarub.eu.org/sh/open.bash && chmod +x open.bash && bash ./open.bash
+curl -o open-gitee.bash https://download.mrarub.eu.org/sh/open-gitee.bash && chmod +x open-gitee.bash && bash ./open-gitee.bash
 ```
 ## 贡献与反馈
 
